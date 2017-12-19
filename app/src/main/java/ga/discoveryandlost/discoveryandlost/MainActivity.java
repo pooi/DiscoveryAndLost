@@ -12,6 +12,8 @@ import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 import java.util.ArrayList;
 
+import ga.discoveryandlost.discoveryandlost.fragment.FindItemFragment;
+import ga.discoveryandlost.discoveryandlost.fragment.RegisterItemFragment;
 import ga.discoveryandlost.discoveryandlost.obj.User;
 
 public class MainActivity extends BaseActivity {
@@ -130,17 +132,17 @@ public class MainActivity extends BaseActivity {
 
             switch (pattern) {
                 case 0: {
-                    f = new Fragment();
+                    f = new RegisterItemFragment();
                     f.setArguments(bdl);
                     break;
                 }
                 case 1: {
-                    f = new Fragment();
+                    f = new FindItemFragment();
                     f.setArguments(bdl);
                     break;
                 }
                 case 2: {
-                    f = new Fragment();
+                    f = new RegisterItemFragment();
                     f.setArguments(bdl);
                     break;
                 }

@@ -3,6 +3,7 @@ package ga.discoveryandlost.discoveryandlost;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import com.afollestad.materialdialogs.Theme;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -147,12 +149,11 @@ public class StartActivity extends BaseActivity {
 
         String loginId = setting.getString("login_id", null);
         String loginPw = setting.getString("login_pw", null);
-        boolean isEmployee = setting.getBoolean("isEmployee", false);
 
 
         if(loginId != null && loginPw != null){
 
-            login(loginId, loginPw, isEmployee);
+            login(loginId, loginPw);
 
         }else{
 
@@ -255,13 +256,10 @@ public class StartActivity extends BaseActivity {
 
     }
 
-    private void login(String id, String pw, final boolean isEmployee){
+    private void login(String id, String pw){
 
         HashMap<String, String> map = new HashMap<>();
-        if(isEmployee)
-            map.put("service", "login_employee");
-        else
-            map.put("service", "login_supporter");
+        map.put("service", "login_user");
         map.put("login_id", id);
         map.put("login_pw", pw);
 
@@ -273,19 +271,16 @@ public class StartActivity extends BaseActivity {
 
                 User user = new User(data);
 
-                if(!user.isEmpty()){
-                    USER = user;
-                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
-                    redirectMainActivity();
-
-                }else{
-                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
-                }
+                USER = user;
+                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                redirectMainActivity();
 
             }
         }.start();
 
     }
+
+
 
     private void redirectMainActivity(){
         Intent intent = new Intent(StartActivity.this, MainActivity.class);
