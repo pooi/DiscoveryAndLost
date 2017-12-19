@@ -19,59 +19,57 @@ import ga.discoveryandlost.discoveryandlost.R;
 
 public class DalItem implements Serializable {
 
-    String category, color, brand, building, room, tags, photos;
+    String category, color, brand, building, room, tags, photos, description;
 
     String tempImageName;
 
     ArrayList<HashMap<String, String>> querys;
 
-    LayoutInflater inflater;
-
-    public DalItem(LayoutInflater inflater){
-
-        this.inflater = inflater;
+    public DalItem(){
         querys = new ArrayList<>();
-
     }
 
-    public View getQueryView(int pos){
+    public View getQueryView(LayoutInflater inflater, int pos){
 
-        View v = inflater.inflate(R.layout.question_and_answer_custom_item, null, false);
+        if(inflater != null) {
+            View v = inflater.inflate(R.layout.question_and_answer_custom_item, null, false);
 
-        TextView tv_question = (TextView)v.findViewById(R.id.tv_question);
-        MaterialEditText edit_answer = (MaterialEditText)v.findViewById(R.id.edit_answer);
+            TextView tv_question = (TextView) v.findViewById(R.id.tv_question);
+            MaterialEditText edit_answer = (MaterialEditText) v.findViewById(R.id.edit_answer);
 
-        switch (pos){
-            case 0:{
-                tv_question.setText("카테고리는 무엇입니까?");
-                edit_answer.setText(category);
-                break;
-            }
-            case 1:{
-                tv_question.setText("무슨 색입니까?");
-                edit_answer.setText(color);
-                break;
-            }
-            case 2:{
-                tv_question.setText("브랜드는 무엇입니까?");
-                edit_answer.setText(brand);
-                break;
-            }
-            case 3:{
-                tv_question.setText("어디서 발견했습니까?");
-                edit_answer.setText(building);
-                break;
-            }
-            case 4:{
-                tv_question.setText("기타 특징을 입력해주세요.(콤마로 구분)");
-                edit_answer.setText(tags);
-                break;
-            }
+            switch (pos) {
+                case 0: {
+                    tv_question.setText("카테고리는 무엇입니까?");
+                    edit_answer.setText(category);
+                    break;
+                }
+                case 1: {
+                    tv_question.setText("무슨 색입니까?");
+                    edit_answer.setText(color);
+                    break;
+                }
+                case 2: {
+                    tv_question.setText("브랜드는 무엇입니까?");
+                    edit_answer.setText(brand);
+                    break;
+                }
+                case 3: {
+                    tv_question.setText("어디서 발견했습니까?");
+                    edit_answer.setText(building);
+                    break;
+                }
+                case 4: {
+                    tv_question.setText("기타 특징을 입력해주세요.(콤마로 구분)");
+                    edit_answer.setText(tags);
+                    break;
+                }
 
 
+            }
+            return v;
         }
 
-        return v;
+        return null;
 
     }
 
@@ -119,7 +117,7 @@ public class DalItem implements Serializable {
             case "mouse":
                 category = "마우스";
                 break;
-            case "tumblr":
+            case "tumbler":
                 category = "텀블러";
                 break;
             case "laptop":
@@ -189,5 +187,13 @@ public class DalItem implements Serializable {
 
     public void setTempImageName(String tempImageName) {
         this.tempImageName = tempImageName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

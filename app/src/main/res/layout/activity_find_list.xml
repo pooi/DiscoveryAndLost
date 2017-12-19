@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ga.discoveryandlost.discoveryandlost.activity.RegisterNewItemActivity"
+    tools:context="ga.discoveryandlost.discoveryandlost.activity.FindListActivity"
     android:background="@color/white"
     >
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/rv"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/custom_actionbar_size"
+        android:paddingBottom="75dp"
+        android:layout_above="@+id/li_btn"
+        android:clipChildren="false"
+        >
+    </android.support.v7.widget.RecyclerView>
 
-    <ga.discoveryandlost.discoveryandlost.util.CustomViewPager
-        android:id="@+id/pager"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/main_indicator_ad"
         >
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_search_data"
+            android:textColor="@color/dark_gray"
+            />
 
-    </ga.discoveryandlost.discoveryandlost.util.CustomViewPager>
-
-    <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
-        android:id="@+id/main_indicator_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@+id/li_btn"
-        />
-
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/li_btn"
@@ -39,17 +47,18 @@
         >
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_back"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@color/dark_gray"
-            android:text="@string/cancel"
+            android:text="@string/back_srt"
             android:textColor="@color/white"
             android:textSize="@dimen/default_menu_font_big_size"
             />
 
     </LinearLayout>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -64,14 +73,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="평가하기"
+                android:text="분실물 검색 목록"
                 android:textColor="@color/white"
-                android:textSize="@dimen/custom_actionbar_title_size"
+                android:textSize="16sp"
                 android:layout_centerInParent="true"
                 />
 

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ga.discoveryandlost.discoveryandlost.activity.RequestLostActivity"
+    android:background="@color/transparent"
+    >
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/cv"
+        android:animateLayoutChanges="true"
+        card_view:cardCornerRadius="10dp"
+        >
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+
+
+            <LinearLayout
+                android:id="@+id/li_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+
+                >
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@color/dark_gray"
+                    android:text="취소"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_font_size"
+                    />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/light_gray"
+                    />
+
+                <Button
+                    android:id="@+id/btn_request"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:text="요청"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_font_size"
+                    />
+
+            </LinearLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius_top_left="10dp"
+                app:riv_corner_radius_top_right="10dp"
+                app:riv_mutate_background="false"
+                app:riv_oval="false"
+
+                />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/li_btn"
+                android:layout_below="@+id/img"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Color"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_brand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Brand"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_building"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Building"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tags"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_match"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Match"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="매치율이 70%미만이면 즉시 수령이 불가능합니다."
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>

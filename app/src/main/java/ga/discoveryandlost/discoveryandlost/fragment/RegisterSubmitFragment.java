@@ -10,14 +10,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.io.File;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+
+import ga.discoveryandlost.discoveryandlost.Information;
 import ga.discoveryandlost.discoveryandlost.R;
 import ga.discoveryandlost.discoveryandlost.obj.DalItem;
+import ga.discoveryandlost.discoveryandlost.util.ParsePHP;
 import ga.discoveryandlost.discoveryandlost.util.RegisterSelectListener;
 
 public class RegisterSubmitFragment extends BaseFragment {
@@ -27,13 +42,14 @@ public class RegisterSubmitFragment extends BaseFragment {
     private Context context;
 
     private LinearLayout li_qa;
-    private Button nextBtn;
+    private Button submitBtn;
 
     private RoundedImageView imageView;
     private DalItem item;
     private View qaView;
 
     private RegisterSelectListener selectListener;
+
 
     private int position;
     @Override
@@ -70,33 +86,40 @@ public class RegisterSubmitFragment extends BaseFragment {
 
         imageView = (RoundedImageView)view.findViewById(R.id.img);
         li_qa = (LinearLayout)view.findViewById(R.id.li_qa);
-        nextBtn = (Button)view.findViewById(R.id.nextBtn);
+        submitBtn = (Button)view.findViewById(R.id.btn_submit);
 
-        qaView = item.getQueryView(position);
-        li_qa.addView(qaView);
+//        qaView = item.getQueryView(position);
+//        li_qa.addView(qaView);
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(selectListener != null) {
-                    selectListener.select(position, qaView, -1, false);
-                }
-            }
-        });
+//        nextBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(selectListener != null) {
+//                    selectListener.select(position, qaView, -1, false);
+//                }
+//            }
+//        });
 
-//        File imgFile = new  File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
-//
-//        if(imgFile.exists()){
-//
-//            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//
-//            imageView.setImageBitmap(bitmap);
-//
-////            myImage.setImageBitmap(myBitmap);
-//
-//        }
+        File imgFile = new  File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
+
+        if(imgFile.exists()){
+
+            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+            imageView.setImageBitmap(bitmap);
+
+//            myImage.setImageBitmap(myBitmap);
+
+        }
 
         updateContent();
+
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectListener.submit();
+            }
+        });
 
 //        editText.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -160,14 +183,15 @@ public class RegisterSubmitFragment extends BaseFragment {
 
         for(int i=0; i<item.getSize(); i++){
 
-            View v = item.getQueryView(i);
+            View v = item.getQueryView(getLayoutInflater(), i);
             MaterialEditText editText = (MaterialEditText)v.findViewById(R.id.edit_answer);
             editText.setEnabled(false);
-            li_qa.addView(editText);
+            li_qa.addView(v);
 
         }
 
     }
+
 
 //    public void addSubmitContent(String question, String answer){
 //        if(isSubmitMode) {

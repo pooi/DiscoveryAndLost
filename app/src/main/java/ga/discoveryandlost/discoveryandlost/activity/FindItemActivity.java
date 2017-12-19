@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -12,10 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -34,33 +32,35 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import ga.discoveryandlost.discoveryandlost.BaseActivity;
 import ga.discoveryandlost.discoveryandlost.CustomApplication;
 import ga.discoveryandlost.discoveryandlost.Information;
 import ga.discoveryandlost.discoveryandlost.R;
 import ga.discoveryandlost.discoveryandlost.StartActivity;
+import ga.discoveryandlost.discoveryandlost.fragment.FindSubmitItemFragment;
 import ga.discoveryandlost.discoveryandlost.fragment.RegisterDetailFragment;
 import ga.discoveryandlost.discoveryandlost.fragment.RegisterSubmitFragment;
 import ga.discoveryandlost.discoveryandlost.obj.DalItem;
+import ga.discoveryandlost.discoveryandlost.obj.DalLost;
 import ga.discoveryandlost.discoveryandlost.util.CustomViewPager;
 import ga.discoveryandlost.discoveryandlost.util.RegisterSelectListener;
 
-public class RegisterNewItemActivity extends BaseActivity implements RegisterSelectListener{
+public class FindItemActivity extends BaseActivity implements RegisterSelectListener{
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_SUCCESS = 500;
     private final int MSG_MESSAGE_FAIL = 501;
 
-    String itemName;
+//    String itemName;
 
     private DotIndicator dotIndicator;
     private CustomViewPager viewPager;
     private NavigationAdapter mPagerAdapter;
     private RegisterDetailFragment[] registerDetailFragments;
-    private RegisterSubmitFragment submitFragment;
+    private FindSubmitItemFragment submitItemFragment;
 
+    ArrayList<DalLost> lostList;
     DalItem item;
 
     private MaterialDialog progressDialog;
@@ -70,12 +70,13 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_new_item);
 
-        itemName = getIntent().getStringExtra("item");
+        lostList = new ArrayList<>();
+//        itemName = getIntent().getStringExtra("item");
         item = new DalItem();
-        String imageName = getIntent().getStringExtra("imageName");
+//        String imageName = getIntent().getStringExtra("imageName");
 
-        item.setCategory(itemName);
-        item.setTempImageName(imageName);
+//        item.setCategory(itemName);
+//        item.setTempImageName(imageName);
 
         registerDetailFragments = new RegisterDetailFragment[item.getSize()];
 
@@ -88,7 +89,7 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
         findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterNewItemActivity.this.finish();
+                FindItemActivity.this.finish();
             }
         });
 
@@ -116,7 +117,10 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
             @Override
             public void onPageSelected(int position) {
                 dotIndicator.setSelectedItem(position, true);
-                submitFragment.updateContent();
+                submitItemFragment.updateContent();
+//                if(position == item.getSize()){
+//                    submitItemFragment.updateContent();
+//                }
             }
 
             @Override
@@ -161,17 +165,17 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
     public RegisterDetailFragment getReviewItemFragment(int position){
         return registerDetailFragments[position];
     }
-    public void setRegisterSubmitFragment(RegisterSubmitFragment f){
-        this.submitFragment = f;
+    public void setRegisterSubmitFragment(FindSubmitItemFragment f){
+        this.submitItemFragment = f;
     }
-    public RegisterSubmitFragment getSubmitFragment(){
-        return this.submitFragment;
+    public FindSubmitItemFragment getSubmitFragment(){
+        return this.submitItemFragment;
     }
 
     @Override
     public void select(final int fragmentPosition, View v, int selectAnswerIndex, boolean force) {
         item.updateContent(v, fragmentPosition);
-        submitFragment.updateContent();
+        submitItemFragment.updateContent();
 
         Runnable runnable = new Runnable() {
             public void run() {
@@ -192,44 +196,58 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
         progressDialog.show();
 
-        File imgFile = new  File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
+//        File imgFile = new  File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
 
-        Bitmap bitmap = null;
-
-        if(imgFile.exists()){
-
-            bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-//            myImage.setImageBitmap(myBitmap);
-
-        }
-
-        final boolean flagRemoveImg = bitmap != null;
+//        Bitmap bitmap = null;
+//
+//        if(imgFile.exists()){
+//
+//            bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//
+////            myImage.setImageBitmap(myBitmap);
+//
+//        }
+//
+//        final boolean flagRemoveImg = bitmap != null;
 
         SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, Information.MAIN_SERVER_ADDRESS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                        try {
-                            JSONObject jObj = new JSONObject(response);
-                            String status = jObj.getString("status");
 
-                            if("success".equals(status)){
-                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
-                            }else{
-                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
-                            }
+                        if(lostList == null)
+                            lostList = new ArrayList<>();
 
-                            if(flagRemoveImg){
-                                removeAllImage();
-                            }
+                        lostList.clear();
 
-                        } catch (JSONException e) {
-                            // JSON error
-                            e.printStackTrace();
+                        lostList = DalLost.getLostList(response);
+
+                        if(lostList == null){
                             handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                        }else{
+                            handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
                         }
+
+//                        try {
+//                            JSONObject jObj = new JSONObject(response);
+//                            String status = jObj.getString("status");
+//
+//                            if("success".equals(status)){
+//                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+//                            }else{
+//                                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+//                            }
+//
+////                            if(flagRemoveImg){
+////                                removeAllImage();
+////                            }
+//
+//                        } catch (JSONException e) {
+//                            // JSON error
+//                            e.printStackTrace();
+//                            handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+//                        }
 
                     }
                 }, new Response.ErrorListener() {
@@ -239,39 +257,37 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
             }
         });
 
-        smr.addStringParam("service", "registerLost");
+        smr.addStringParam("service", "searchLost");
 
 
 
-        if(bitmap != null){
-            smr.addStringParam("save_photo", "1");
-            File f3=new File(Environment.getExternalStorageDirectory()+"/dal/temp/");
-            if(!f3.exists())
-                f3.mkdirs();
-            OutputStream outStream = null;
-            File file = new File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
-            try {
-                outStream = new FileOutputStream(file);
-                Bitmap mBitmap = BitmapFactory.decodeByteArray(CameraActivity.photo, 0, CameraActivity.photo.length);
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-                outStream.close();
-                //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//        if(bitmap != null){
+//            smr.addStringParam("save_photo", "1");
+//            File f3=new File(Environment.getExternalStorageDirectory()+"/dal/temp/");
+//            if(!f3.exists())
+//                f3.mkdirs();
+//            OutputStream outStream = null;
+//            File file = new File(Environment.getExternalStorageDirectory() + "/dal/temp/"+item.getTempImageName());
+//            try {
+//                outStream = new FileOutputStream(file);
+//                Bitmap mBitmap = BitmapFactory.decodeByteArray(CameraActivity.photo, 0, CameraActivity.photo.length);
+//                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+//                outStream.close();
+//                //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            smr.addFile("image", file.getPath());
+//
+//        }
 
-            smr.addFile("image", file.getPath());
 
-        }
-
-        smr.addStringParam("rgt_user", StartActivity.USER.getId());
         smr.addStringParam("category", item.getCategory() == null ? "" : item.getCategory());
         smr.addStringParam("color", item.getColor() == null ? "" : item.getColor());
         smr.addStringParam("brand", item.getBrand() == null ? "" : item.getBrand());
         smr.addStringParam("building", item.getBuilding() == null ? "" : item.getBuilding());
         smr.addStringParam("room", item.getRoom() == null ? "" : item.getRoom());
-        smr.addStringParam("tags", item.getTags() == null ? "" : item.getTags());
-        smr.addStringParam("description", item.getDescription() == null ? "" : item.getDescription());
 
 
         CustomApplication.getInstance().addToRequestQueue(smr);
@@ -285,22 +301,15 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
             switch (msg.what) {
                 case MSG_MESSAGE_SUCCESS:
                     progressDialog.hide();
-                    new MaterialDialog.Builder(RegisterNewItemActivity.this)
-                            .title(R.string.success_srt)
-                            .content(R.string.successfully_recorded)
-                            .positiveText(R.string.ok)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
-                                    RegisterNewItemActivity.this.finish();
-                                }
-                            })
-                            .show();
+                    Intent intent = new Intent(FindItemActivity.this, FindListActivity.class);
+                    intent.putExtra("list", lostList);
+                    intent.putExtra("item", item);
+                    startActivity(intent);
+                    FindItemActivity.this.finish();
                     break;
                 case MSG_MESSAGE_FAIL:
                     progressDialog.hide();
-                    new MaterialDialog.Builder(RegisterNewItemActivity.this)
+                    new MaterialDialog.Builder(FindItemActivity.this)
                             .title(R.string.fail_srt)
                             .positiveText(R.string.ok)
                             .show();
@@ -315,9 +324,9 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
         private int size;
         private DalItem item;
-        private RegisterNewItemActivity activity;
+        private FindItemActivity activity;
 
-        public NavigationAdapter(FragmentManager fm, DalItem item, RegisterNewItemActivity activity) {
+        public NavigationAdapter(FragmentManager fm, DalItem item, FindItemActivity activity) {
             super(fm);
             this.item = item;
             this.size = item.getSize()+1;
@@ -338,13 +347,13 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
                 if(activity.getSubmitFragment() == null) {
 
-                    f = new RegisterSubmitFragment();
+                    f = new FindSubmitItemFragment();
                     bdl.putInt("position", pattern);
                     bdl.putSerializable("item", item);
                     bdl.putSerializable("listener", activity);
 
 
-                    activity.setRegisterSubmitFragment((RegisterSubmitFragment) f);
+                    activity.setRegisterSubmitFragment((FindSubmitItemFragment) f);
 
                 }else{
                     f = activity.getSubmitFragment();
@@ -392,7 +401,6 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
             return size;
         }
     }
-
 
     @Override
     public void onDestroy(){

@@ -61,7 +61,7 @@
         <Button
             android:id="@+id/btn_back"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@color/dark_gray"
             android:text="@string/back_srt"

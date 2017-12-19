@@ -12,6 +12,7 @@ import com.flaviofaria.kenburnsview.KenBurnsView;
 
 import ga.discoveryandlost.discoveryandlost.R;
 import ga.discoveryandlost.discoveryandlost.activity.CameraActivity;
+import ga.discoveryandlost.discoveryandlost.activity.FindItemActivity;
 import ga.discoveryandlost.discoveryandlost.obj.User;
 
 
@@ -62,7 +63,7 @@ public class FindItemFragment extends BaseFragment {
         cv_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, CameraActivity.class);
+                Intent intent = new Intent(context, FindItemActivity.class);
                 startActivity(intent);
             }
         });

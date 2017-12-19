@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".CustomApplication"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:icon="@mipmap/ic_launcher"
@@ -44,7 +45,50 @@
                 <category android:name="ga.discoveryandlost.discoveryandlost" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterNewItemActivity"></activity>
+        <activity
+            android:name=".activity.RegisterNewItemActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="ga.discoveryandlost.discoveryandlost" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.FindItemActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="ga.discoveryandlost.discoveryandlost" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.FindListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="ga.discoveryandlost.discoveryandlost" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.RequestLostActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="ga.discoveryandlost.discoveryandlost" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

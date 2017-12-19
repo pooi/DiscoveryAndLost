@@ -74,7 +74,7 @@
                 android:background="@color/dark_gray"
                 android:text="@string/login_srt"
                 android:textColor="@color/white"
-                android:textSize="@dimen/default_font_size"
+                android:textSize="@dimen/default_menu_font_big_size"
                 />
 
         </LinearLayout>

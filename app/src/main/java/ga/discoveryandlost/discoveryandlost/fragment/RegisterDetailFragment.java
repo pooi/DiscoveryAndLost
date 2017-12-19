@@ -72,7 +72,7 @@ public class RegisterDetailFragment extends BaseFragment {
         li_qa = (LinearLayout)view.findViewById(R.id.li_qa);
         nextBtn = (Button)view.findViewById(R.id.nextBtn);
 
-        qaView = item.getQueryView(position);
+        qaView = item.getQueryView(getLayoutInflater(), position);
         li_qa.addView(qaView);
 
         nextBtn.setOnClickListener(new View.OnClickListener() {

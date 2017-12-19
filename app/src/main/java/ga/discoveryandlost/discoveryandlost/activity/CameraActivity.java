@@ -67,6 +67,13 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
 
     private void init(){
 
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CameraActivity.this.finish();
+            }
+        });
+
         detecter = new Detecter(getApplicationContext(), this);
 
         initProgressDialog();
@@ -109,7 +116,9 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
 
                         Bitmap bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
                         photo = picture;
-                        detecter.recognize_bitmap(bitmap);
+                        if(bitmap != null) {
+                            detecter.recognize_bitmap(bitmap);
+                        }
 
                     }
                 }.start();
@@ -270,4 +279,5 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
 //        }.start();
 
     }
+
 }
