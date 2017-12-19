@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=""
+    android:background="@color/gray"
+    >
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_transparent"
+        >
+
+        <LinearLayout
+            android:id="@+id/form_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/form_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/default_font_size"
+                android:textColor="@color/profile_content"
+                android:hint="@string/please_enter_id"
+                app:met_primaryColor="@color/profile_content"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/id"
+                app:met_singleLineEllipsis="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/form_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/default_font_size"
+                android:textColor="@color/profile_content"
+                android:hint="@string/please_enter_pw"
+                android:inputType="textPassword"
+                app:met_primaryColor="@color/profile_content"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/pw"
+                app:met_singleLineEllipsis="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <Button
+                android:id="@+id/form_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/dark_gray"
+                android:text="@string/login_srt"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font_size"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
