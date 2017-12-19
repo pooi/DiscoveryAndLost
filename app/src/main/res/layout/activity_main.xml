@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ga.discoveryandlost.discoveryandlost.MainActivity">
+    tools:context="ga.discoveryandlost.discoveryandlost.MainActivity"
+    android:background="@color/white"
+    >
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Hello World!" app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/ntb_horizontal"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray"
+            />
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_horizontal_ntb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+
+
+    <com.gigamole.navigationtabbar.ntb.NavigationTabBar
+        android:layout_gravity="top"
+        android:id="@+id/ntb_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        app:ntb_bg_color="@color/background_color"
+        app:ntb_inactive_color="#545256"
+        app:ntb_badge_gravity="top"
+        app:ntb_badge_position="right"
+        app:ntb_badged="false"
+        app:ntb_scaled="true"
+        app:ntb_tinted="true"
+        app:ntb_title_mode="all"
+        app:ntb_titled="false"
+        app:ntb_swiped="true"/>
+
+
+</RelativeLayout>
