@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.ppamorim.dragger.DraggerPosition;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class LostListCustomAdapter extends RecyclerView.Adapter<LostListCustomAd
         TextView tv_date;
         TextView tv_match;
 
-        ImageView img;
+        RoundedImageView img;
 
         public ViewHolder(View v) {
             super(v);
@@ -228,7 +229,7 @@ public class LostListCustomAdapter extends RecyclerView.Adapter<LostListCustomAd
             tv_color = (TextView)v.findViewById(R.id.tv_color);
             tv_date = (TextView)v.findViewById(R.id.tv_date);
             tv_match = (TextView)v.findViewById(R.id.tv_match);
-            img = (ImageView)v.findViewById(R.id.img);
+            img = (RoundedImageView)v.findViewById(R.id.img);
         }
 
         public void setCardButtonOnTouchAnimation(final View v, final View animV){

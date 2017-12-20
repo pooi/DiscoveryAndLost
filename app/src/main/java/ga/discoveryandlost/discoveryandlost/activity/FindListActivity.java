@@ -105,6 +105,7 @@ public class FindListActivity extends BaseActivity implements OnAdapterSupport {
     @Override
     public void redirectActivity(Intent intent) {
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_up_info,R.anim.no_change);
     }
 
 }

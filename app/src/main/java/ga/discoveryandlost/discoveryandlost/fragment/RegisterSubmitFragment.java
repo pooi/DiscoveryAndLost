@@ -186,6 +186,9 @@ public class RegisterSubmitFragment extends BaseFragment {
             View v = item.getQueryView(getLayoutInflater(), i);
             MaterialEditText editText = (MaterialEditText)v.findViewById(R.id.edit_answer);
             editText.setEnabled(false);
+            if(editText.getText().toString() == null || editText.getText().toString().isEmpty()){
+                editText.setHint("-");
+            }
             li_qa.addView(v);
 
         }

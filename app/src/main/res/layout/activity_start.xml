@@ -21,6 +21,18 @@
         android:background="@color/half_transparent"
         >
 
+        <CheckBox
+            android:id="@+id/chk_employee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/i_am_employee"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:buttonTint="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/form_login"
+            />
+
         <LinearLayout
             android:id="@+id/form_login"
             android:layout_width="match_parent"
@@ -33,6 +45,7 @@
             android:background="@color/white"
             android:orientation="vertical"
             >
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/form_id"

@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ga.discoveryandlost.discoveryandlost.BaseActivity;
@@ -54,7 +55,7 @@ public class FindItemActivity extends BaseActivity implements RegisterSelectList
 
 //    String itemName;
 
-    private DotIndicator dotIndicator;
+//    private DotIndicator dotIndicator;
     private CustomViewPager viewPager;
     private NavigationAdapter mPagerAdapter;
     private RegisterDetailFragment[] registerDetailFragments;
@@ -95,11 +96,11 @@ public class FindItemActivity extends BaseActivity implements RegisterSelectList
 
         initProgressDialog();
 
-        dotIndicator = (DotIndicator) findViewById(R.id.main_indicator_ad);
-        dotIndicator.setSelectedDotColor(Color.parseColor("#FF4081"));
-        dotIndicator.setUnselectedDotColor(Color.parseColor("#CFCFCF"));
-        dotIndicator.setNumberOfItems(registerDetailFragments.length+1);
-        dotIndicator.setSelectedItem(0, false);
+//        dotIndicator = (DotIndicator) findViewById(R.id.main_indicator_ad);
+//        dotIndicator.setSelectedDotColor(Color.parseColor("#FF4081"));
+//        dotIndicator.setUnselectedDotColor(Color.parseColor("#CFCFCF"));
+//        dotIndicator.setNumberOfItems(registerDetailFragments.length+1);
+//        dotIndicator.setSelectedItem(0, false);
         viewPager = (CustomViewPager) findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(registerDetailFragments.length+1);
         mPagerAdapter = new NavigationAdapter(getSupportFragmentManager(), item, this);
@@ -116,8 +117,9 @@ public class FindItemActivity extends BaseActivity implements RegisterSelectList
 
             @Override
             public void onPageSelected(int position) {
-                dotIndicator.setSelectedItem(position, true);
-                submitItemFragment.updateContent();
+//                dotIndicator.setSelectedItem(position, true);
+                if(submitItemFragment != null)
+                    submitItemFragment.updateContent();
 //                if(position == item.getSize()){
 //                    submitItemFragment.updateContent();
 //                }
@@ -295,7 +297,7 @@ public class FindItemActivity extends BaseActivity implements RegisterSelectList
     }
 
 
-    private class MyHandler extends Handler {
+    private class MyHandler extends Handler implements Serializable{
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -320,7 +322,7 @@ public class FindItemActivity extends BaseActivity implements RegisterSelectList
         }
     }
 
-    private static class NavigationAdapter extends FragmentPagerAdapter {
+    private static class NavigationAdapter extends FragmentPagerAdapter implements Serializable {
 
         private int size;
         private DalItem item;

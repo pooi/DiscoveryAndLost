@@ -80,7 +80,129 @@ public class User implements Serializable {
                 phone = (String) temp.get("phone");
             }
             if (keySet.contains("registered_date")) {
-                registeredDate = Long.parseLong((String) temp.get("registered_date"));
+                String date = (String) temp.get("registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("registered_date"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void convertRgt(JSONObject temp){
+        ArrayList<String> keySet = AdditionalFunc.getKeySet(temp.keys());
+
+        try {
+
+            if (keySet.contains("rgt_id")) {
+                id = (String) temp.get("rgt_id");
+            }
+            if (keySet.contains("rgt_student_id")) {
+                studentId = (String) temp.get("rgt_student_id");
+            }
+            if (keySet.contains("rgt_email")) {
+                email = (String) temp.get("rgt_email");
+            }
+            if (keySet.contains("rgt_first_name")) {
+                fn = (String) temp.get("rgt_first_name");
+            }
+            if (keySet.contains("rgt_last_name")) {
+                ln = (String) temp.get("rgt_last_name");
+            }
+            if (keySet.contains("rgt_phone")) {
+                phone = (String) temp.get("rgt_phone");
+            }
+            if (keySet.contains("rgt_registered_date")) {
+                String date = (String) temp.get("rgt_registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("rgt_registered_date"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void convertRcv(JSONObject temp){
+        ArrayList<String> keySet = AdditionalFunc.getKeySet(temp.keys());
+
+        try {
+
+            if (keySet.contains("rcv_id")) {
+                id = (String) temp.get("rcv_id");
+            }
+            if (keySet.contains("rcv_student_id")) {
+                studentId = (String) temp.get("rcv_student_id");
+            }
+            if (keySet.contains("rcv_email")) {
+                email = (String) temp.get("rcv_email");
+            }
+            if (keySet.contains("rcv_first_name")) {
+                fn = (String) temp.get("rcv_first_name");
+            }
+            if (keySet.contains("rcv_last_name")) {
+                ln = (String) temp.get("rcv_last_name");
+            }
+            if (keySet.contains("rcv_phone")) {
+                phone = (String) temp.get("rcv_phone");
+            }
+            if (keySet.contains("rcv_registered_date")) {
+                String date = (String) temp.get("rcv_registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("rcv_registered_date"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void convertBuy(JSONObject temp){
+        ArrayList<String> keySet = AdditionalFunc.getKeySet(temp.keys());
+
+        try {
+
+            if (keySet.contains("buy_id")) {
+                id = (String) temp.get("buy_id");
+            }
+            if (keySet.contains("buy_student_id")) {
+                studentId = (String) temp.get("buy_student_id");
+            }
+            if (keySet.contains("buy_email")) {
+                email = (String) temp.get("buy_email");
+            }
+            if (keySet.contains("buy_first_name")) {
+                fn = (String) temp.get("buy_first_name");
+            }
+            if (keySet.contains("buy_last_name")) {
+                ln = (String) temp.get("buy_last_name");
+            }
+            if (keySet.contains("buy_phone")) {
+                phone = (String) temp.get("buy_phone");
+            }
+            if (keySet.contains("buy_registered_date")) {
+                String date = (String) temp.get("buy_registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("buy_registered_date"));
             }
 
         }catch (Exception e){
@@ -154,6 +276,10 @@ public class User implements Serializable {
 
     public void setLn(String ln) {
         this.ln = ln;
+    }
+
+    public String getName(){
+        return ln+fn;
     }
 
     public String getPhone() {

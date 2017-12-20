@@ -35,10 +35,10 @@
             android:hint="내용을 입력해주세요."
             app:met_primaryColor="@color/profile_content"
             app:met_floatingLabel="none"
-            app:met_floatingLabelText="@string/ln"
             app:met_singleLineEllipsis="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:gravity="center"
             />
 
     </LinearLayout>

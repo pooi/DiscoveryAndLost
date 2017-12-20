@@ -1,6 +1,8 @@
 package ga.discoveryandlost.discoveryandlost.obj;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -41,26 +43,106 @@ public class DalItem implements Serializable {
                 case 0: {
                     tv_question.setText("카테고리는 무엇입니까?");
                     edit_answer.setText(category);
+                    edit_answer.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            category = charSequence.toString();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     break;
                 }
                 case 1: {
                     tv_question.setText("무슨 색입니까?");
                     edit_answer.setText(color);
+                    edit_answer.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            color = charSequence.toString();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     break;
                 }
                 case 2: {
                     tv_question.setText("브랜드는 무엇입니까?");
                     edit_answer.setText(brand);
+                    edit_answer.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            brand = charSequence.toString();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     break;
                 }
                 case 3: {
                     tv_question.setText("어디서 발견했습니까?");
                     edit_answer.setText(building);
+                    edit_answer.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            building = charSequence.toString();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     break;
                 }
                 case 4: {
                     tv_question.setText("기타 특징을 입력해주세요.(콤마로 구분)");
                     edit_answer.setText(tags);
+                    edit_answer.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            tags = charSequence.toString();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                     break;
                 }
 

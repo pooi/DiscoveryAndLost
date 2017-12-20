@@ -15,13 +15,19 @@ import ga.discoveryandlost.discoveryandlost.util.AdditionalFunc;
 
 public class DalLost implements Serializable {
 
-    String id, category, color, brand, building, room, tags, description, photos, rgtUser, rcvUser;
+    // lost_id, price, rgt_user, buy_user, registered_date, bought_date
+
+    String id, category, color, brand, building, room, tags, description, photos;
+
+    User rgtUser, rcvUser;
 
     Double match;
 
     Long registeredDate, receivedDate;
 
     public DalLost(){
+        rgtUser = new User();
+        rcvUser = new User();
         match = 0.0;
     }
 
@@ -64,6 +70,9 @@ public class DalLost implements Serializable {
 
         try {
 
+            rgtUser.convertRgt(temp);
+            rcvUser.convertRcv(temp);
+
             if (keySet.contains("id")) {
                 id = (String) temp.get("id");
             }
@@ -91,23 +100,87 @@ public class DalLost implements Serializable {
             if (keySet.contains("photos")) {
                 photos = (String) temp.get("photos");
             }
-            if (keySet.contains("rgt_user")) {
-                rgtUser = (String) temp.get("rgt_user");
-            }
-            if (keySet.contains("rcv_user")) {
-                rcvUser = (String) temp.get("rcv_user");
-            }
             if (keySet.contains("registered_date")) {
-                registeredDate = Long.parseLong((String) temp.get("registered_date"));
+                String date = (String) temp.get("registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("registered_date"));
             }
             if (keySet.contains("received_date")) {
-                registeredDate = Long.parseLong((String) temp.get("received_date"));
+                String date = (String) temp.get("received_date");
+                if(date == null || date.isEmpty()){
+                    receivedDate = null;
+                }else {
+                    receivedDate = Long.parseLong(date);
+                }
+//                registeredDate = Long.parseLong((String) temp.get("received_date"));
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+    public void convertLost(JSONObject temp){
+        ArrayList<String> keySet = AdditionalFunc.getKeySet(temp.keys());
+
+        try {
+
+            rgtUser.convertRgt(temp);
+            rcvUser.convertRcv(temp);
+
+            if (keySet.contains("lost_id")) {
+                id = (String) temp.get("lost_id");
+            }
+            if (keySet.contains("lost_category")) {
+                category = (String) temp.get("lost_category");
+            }
+            if (keySet.contains("lost_color")) {
+                color = (String) temp.get("lost_color");
+            }
+            if (keySet.contains("lost_brand")) {
+                brand = (String) temp.get("lost_brand");
+            }
+            if (keySet.contains("lost_building")) {
+                building = (String) temp.get("lost_building");
+            }
+            if (keySet.contains("lost_room")) {
+                room = (String) temp.get("lost_room");
+            }
+            if (keySet.contains("lost_tags")) {
+                tags = (String) temp.get("lost_tags");
+            }
+            if (keySet.contains("lost_description")) {
+                description = (String) temp.get("lost_description");
+            }
+            if (keySet.contains("lost_photos")) {
+                photos = (String) temp.get("lost_photos");
+            }
+            if (keySet.contains("lost_registered_date")) {
+                String date = (String) temp.get("lost_registered_date");
+                if(date == null || date.isEmpty()){
+                    registeredDate = null;
+                }else {
+                    registeredDate = Long.parseLong(date);
+                }
+            }
+            if (keySet.contains("lost_received_date")) {
+                String date = (String) temp.get("lost_received_date");
+                if(date == null || date.isEmpty()){
+                    receivedDate = null;
+                }else {
+                    receivedDate = Long.parseLong(date);
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public static ArrayList<DalLost> getLostList(String data){
 
@@ -131,7 +204,6 @@ public class DalLost implements Serializable {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
 
         return list;
@@ -210,22 +282,6 @@ public class DalLost implements Serializable {
         this.photos = photos;
     }
 
-    public String getRgtUser() {
-        return rgtUser;
-    }
-
-    public void setRgtUser(String rgtUser) {
-        this.rgtUser = rgtUser;
-    }
-
-    public String getRcvUser() {
-        return rcvUser;
-    }
-
-    public void setRcvUser(String rcvUser) {
-        this.rcvUser = rcvUser;
-    }
-
     public Long getRegisteredDate() {
         return registeredDate;
     }
@@ -248,5 +304,21 @@ public class DalLost implements Serializable {
 
     public void setMatch(Double match) {
         this.match = match;
+    }
+
+    public User getRgtUser() {
+        return rgtUser;
+    }
+
+    public void setRgtUser(User rgtUser) {
+        this.rgtUser = rgtUser;
+    }
+
+    public User getRcvUser() {
+        return rcvUser;
+    }
+
+    public void setRcvUser(User rcvUser) {
+        this.rcvUser = rcvUser;
     }
 }

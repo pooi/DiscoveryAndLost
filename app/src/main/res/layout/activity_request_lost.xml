@@ -72,7 +72,8 @@
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/li_btn"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:scaleType="centerCrop"
                 app:riv_corner_radius_top_left="10dp"
@@ -84,9 +85,9 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/li_btn"
-                android:layout_below="@+id/img"
+                android:background="@color/half_transparent"
                 >
 
                 <LinearLayout
@@ -96,6 +97,7 @@
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
+                    android:paddingBottom="10dp"
                     >
 
                     <TextView
@@ -114,7 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Color"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
@@ -125,7 +127,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Brand"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
@@ -136,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Building"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
@@ -147,7 +149,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Tags"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
@@ -158,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Date"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
@@ -181,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="매치율이 70%미만이면 즉시 수령이 불가능합니다."
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/light_gray2"
                         android:textSize="12sp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"

@@ -1,5 +1,6 @@
 package ga.discoveryandlost.discoveryandlost;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -8,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 import java.util.ArrayList;
 
 import ga.discoveryandlost.discoveryandlost.fragment.FindItemFragment;
 import ga.discoveryandlost.discoveryandlost.fragment.RegisterItemFragment;
+import ga.discoveryandlost.discoveryandlost.fragment.SellItemFragment;
 import ga.discoveryandlost.discoveryandlost.obj.User;
 
 public class MainActivity extends BaseActivity {
@@ -22,6 +26,8 @@ public class MainActivity extends BaseActivity {
     private NavigationAdapter mPagerAdapter;
     private String[] toolbarTitleList = new String[3];
     private static final int startPage = 0;
+
+    private FloatingActionsMenu menu;
 
     private User user;
 
@@ -43,6 +49,8 @@ public class MainActivity extends BaseActivity {
 
 
     private void init(){
+
+        floationMenu();
 
         viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         viewPager.setOffscreenPageLimit(toolbarTitleList.length);
@@ -110,7 +118,20 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void floationMenu(){
 
+        menu = (FloatingActionsMenu)findViewById(R.id.multiple_actions);
+
+        FloatingActionButton signup = (FloatingActionButton)findViewById(R.id.signup);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout(MainActivity.this);
+            }
+        });
+        signup.setTitle("로그아웃");
+
+    }
 
 
     private static class NavigationAdapter extends FragmentStatePagerAdapter {
@@ -142,7 +163,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
-                    f = new RegisterItemFragment();
+                    f = new SellItemFragment();
                     f.setArguments(bdl);
                     break;
                 }

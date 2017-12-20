@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -53,6 +54,7 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
     private CardView btnDetect;
 
     public static byte[] photo;
+    private String photoColor;
 
     private MaterialDialog progressDialog;
 
@@ -213,6 +215,16 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
                 outStream = new FileOutputStream(file);
                 Bitmap mBitmap = BitmapFactory.decodeByteArray(CameraActivity.photo, 0, CameraActivity.photo.length);
                 mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+
+                int pixel = mBitmap.getPixel(mBitmap.getWidth()/2, mBitmap.getHeight()/2);
+                int redValue1 = Color.red(pixel);
+                int blueValue1 = Color.blue(pixel);
+                int greenValue1 = Color.green(pixel);
+                int thiscolor1 = Color.rgb(redValue1, greenValue1, blueValue1);
+                System.out.println(String.format("pixel : %d, red : %d, blue : %d, green : %d, thiscolor : %d", pixel, redValue1, blueValue1, greenValue1, thiscolor1));
+
+                detectColor(mBitmap);
+
                 outStream.close();
                 //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
@@ -224,6 +236,66 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
         }
 
         return "";
+
+    }
+
+    private void detectColor(Bitmap bitmap){
+
+        String COLOR = "빨간색,230,25,75/초록색,60,180,75/노란색,255,225,25/파란색,0,130,200/주황색,245,130,48/보라색,145,30,180/하늘색,70,240,240/분홍색,240,50,230/연두색,210,245,60/분홍색,250,190,190/청록색,0,128,128/연조라색,230,190,255/갈색,170,110,40/베이지색,255,250,200/검붉은색,128,0,0/민트색,170,255,195/카키색,128,128,0/살색,255,215,180/남색,0,0,128/회색,128,128,128/하얀색,255,255,255/검은색,0,0,0";
+
+        int r = 0, g = 0, b = 0;
+
+        int cx, cy;
+        cx = bitmap.getWidth()/2;
+        cy = bitmap.getHeight()/2;
+
+        int count = 0;
+        for(int i=-1; i<=1; i++){
+            for(int j=-1; j<=1; j++){
+                count += 1;
+                int px, py;
+                px = cx + i * 10;
+                py = cy + j * 10;
+
+                int pixel = bitmap.getPixel(px, py);
+                int redValue1 = Color.red(pixel);
+                int blueValue1 = Color.blue(pixel);
+                int greenValue1 = Color.green(pixel);
+
+                r += redValue1;
+                g += greenValue1;
+                b += blueValue1;
+
+            }
+        }
+
+        r /= count;
+        g /= count;
+        b /= count;
+        b *= 0.9;
+
+        String color = "";
+        double distance = 100000000000.0;
+
+        for(String strs : COLOR.split("/")){
+
+            String[] rgbs = strs.split(",");
+            String c = rgbs[0];
+            int rTemp = Integer.parseInt(rgbs[1]);
+            int gTemp = Integer.parseInt(rgbs[2]);
+            int bTemp = Integer.parseInt(rgbs[3]);
+
+            double d = Math.sqrt(Math.pow(rTemp - r,2) + Math.pow(gTemp - g,2) + Math.pow(bTemp - b,2));
+
+            if(d < distance){
+                color = c;
+                distance = d;
+            }
+
+        }
+
+        photoColor = color;
+        System.out.println(color);
 
     }
 
@@ -255,6 +327,7 @@ public class CameraActivity extends BaseActivity implements OnDetecterListener {
         Intent intent = new Intent(CameraActivity.this, RegisterNewItemActivity.class);
         intent.putExtra("item", item);
         intent.putExtra("imageName", imageName);
+        intent.putExtra("color", photoColor);
         startActivity(intent);
         finish();
 //        HashMap<String, String> map = new HashMap<>();

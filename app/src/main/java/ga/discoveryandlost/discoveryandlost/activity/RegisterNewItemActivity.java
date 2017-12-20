@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,7 +56,7 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
     String itemName;
 
-    private DotIndicator dotIndicator;
+//    private DotIndicator dotIndicator;
     private CustomViewPager viewPager;
     private NavigationAdapter mPagerAdapter;
     private RegisterDetailFragment[] registerDetailFragments;
@@ -71,11 +72,13 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
         setContentView(R.layout.activity_register_new_item);
 
         itemName = getIntent().getStringExtra("item");
+        String color = getIntent().getStringExtra("color");
         item = new DalItem();
         String imageName = getIntent().getStringExtra("imageName");
 
         item.setCategory(itemName);
         item.setTempImageName(imageName);
+        item.setColor(color);
 
         registerDetailFragments = new RegisterDetailFragment[item.getSize()];
 
@@ -94,11 +97,11 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
         initProgressDialog();
 
-        dotIndicator = (DotIndicator) findViewById(R.id.main_indicator_ad);
-        dotIndicator.setSelectedDotColor(Color.parseColor("#FF4081"));
-        dotIndicator.setUnselectedDotColor(Color.parseColor("#CFCFCF"));
-        dotIndicator.setNumberOfItems(registerDetailFragments.length+1);
-        dotIndicator.setSelectedItem(0, false);
+//        dotIndicator = (DotIndicator) findViewById(R.id.main_indicator_ad);
+//        dotIndicator.setSelectedDotColor(Color.parseColor("#FF4081"));
+//        dotIndicator.setUnselectedDotColor(Color.parseColor("#CFCFCF"));
+//        dotIndicator.setNumberOfItems(registerDetailFragments.length+1);
+//        dotIndicator.setSelectedItem(0, false);
         viewPager = (CustomViewPager) findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(registerDetailFragments.length+1);
         mPagerAdapter = new NavigationAdapter(getSupportFragmentManager(), item, this);
@@ -115,8 +118,9 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
 
             @Override
             public void onPageSelected(int position) {
-                dotIndicator.setSelectedItem(position, true);
-                submitFragment.updateContent();
+//                dotIndicator.setSelectedItem(position, true);
+                if(submitFragment != null)
+                    submitFragment.updateContent();
             }
 
             @Override
@@ -279,7 +283,7 @@ public class RegisterNewItemActivity extends BaseActivity implements RegisterSel
     }
 
 
-    private class MyHandler extends Handler {
+    private class MyHandler extends Handler implements Serializable {
 
         public void handleMessage(Message msg) {
             switch (msg.what) {

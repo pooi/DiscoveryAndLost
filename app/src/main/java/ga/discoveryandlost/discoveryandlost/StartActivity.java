@@ -24,23 +24,28 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import ga.discoveryandlost.discoveryandlost.obj.Director;
 import ga.discoveryandlost.discoveryandlost.obj.User;
 import ga.discoveryandlost.discoveryandlost.util.ParsePHP;
 
 
 public class StartActivity extends BaseActivity {
 
+    public static boolean isEmployeeLogin;
     public static User USER;
+    public static Director DIRECTOR;
 
     private MyHandler handler = new MyHandler();
     private final int MSG_MESSAGE_SUCCESS = 500;
     private final int MSG_MESSAGE_FAIL = 501;
     private final int MSG_MESSAGE_CHECK_LOGIN = 502;
 
+
     // UI
     private KenBurnsView kenBurnsView;
     private RelativeLayout rl_background;
 
+    private CheckBox chk_employee;
     private LinearLayout formLogin;
     private MaterialEditText formId;
     private MaterialEditText formPw;
@@ -112,6 +117,7 @@ public class StartActivity extends BaseActivity {
 
     private void initLoginForm(){
 
+        chk_employee = (CheckBox)findViewById(R.id.chk_employee);
         formLogin = (LinearLayout)findViewById(R.id.form_login);
         formId = (MaterialEditText)findViewById(R.id.form_id);
         formPw = (MaterialEditText)findViewById(R.id.form_pw);
@@ -149,11 +155,12 @@ public class StartActivity extends BaseActivity {
 
         String loginId = setting.getString("login_id", null);
         String loginPw = setting.getString("login_pw", null);
+        boolean isEmployee = setting.getBoolean("isEmployee", false);
 
 
         if(loginId != null && loginPw != null){
 
-            login(loginId, loginPw);
+            login(loginId, loginPw, isEmployee);
 
         }else{
 
@@ -223,7 +230,10 @@ public class StartActivity extends BaseActivity {
         }
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("service", "login_user");
+        if(chk_employee.isChecked())
+            map.put("service", "login_director");
+        else
+            map.put("service", "login_user");
         map.put("login_id", formId.getText().toString());
         map.put("login_pw", formPw.getText().toString());
 
@@ -235,19 +245,41 @@ public class StartActivity extends BaseActivity {
 
                 editor.putString("login_id", formId.getText().toString());
                 editor.putString("login_pw", formPw.getText().toString());
+                editor.putBoolean("isEmployee", chk_employee.isChecked());
                 editor.commit();
 
-                User user = new User(data);
+                if(chk_employee.isChecked()){
 
-                if(!user.isEmpty()){
-                    USER = user;
-                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                    Director director = new Director(data);
 
-                    redirectMainActivity();
+                    if(!director.isEmpty()){
+                        isEmployeeLogin = true;
+                        DIRECTOR = director;
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+
+                        redirectDirectorMainActivity();
+
+                    }else{
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                    }
 
                 }else{
-                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+
+                    User user = new User(data);
+
+                    if(!user.isEmpty()){
+                        USER = user;
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+
+                        redirectMainActivity();
+
+                    }else{
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                    }
+
                 }
+
+
 
 
 
@@ -256,10 +288,13 @@ public class StartActivity extends BaseActivity {
 
     }
 
-    private void login(String id, String pw){
+    private void login(String id, String pw, final boolean isEmployee){
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("service", "login_user");
+        if(isEmployee)
+            map.put("service", "login_director");
+        else
+            map.put("service", "login_user");
         map.put("login_id", id);
         map.put("login_pw", pw);
 
@@ -269,11 +304,30 @@ public class StartActivity extends BaseActivity {
             @Override
             protected void afterThreadFinish(String data) {
 
-                User user = new User(data);
+                if(isEmployee){
 
-                USER = user;
-                handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
-                redirectMainActivity();
+                    Director em = new Director(data);
+
+                    if(!em.isEmpty()){
+                        isEmployeeLogin = true;
+                        DIRECTOR = em;
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+
+                        redirectDirectorMainActivity();
+
+                    }else{
+                        handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_FAIL));
+                    }
+
+                }else{
+
+                    User user = new User(data);
+
+                    USER = user;
+                    handler.sendMessage(handler.obtainMessage(MSG_MESSAGE_SUCCESS));
+                    redirectMainActivity();
+
+                }
 
             }
         }.start();
@@ -284,6 +338,11 @@ public class StartActivity extends BaseActivity {
 
     private void redirectMainActivity(){
         Intent intent = new Intent(StartActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void redirectDirectorMainActivity(){
+        Intent intent = new Intent(StartActivity.this, DirectorMainActivity.class);
         startActivity(intent);
     }
 
