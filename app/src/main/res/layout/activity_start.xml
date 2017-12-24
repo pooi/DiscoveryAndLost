@@ -25,7 +25,7 @@
             android:id="@+id/chk_employee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/i_am_employee"
+            android:text="나는 학생회입니다."
             android:textColor="@color/white"
             android:textStyle="bold"
             android:buttonTint="@color/white"

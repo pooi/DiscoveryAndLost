@@ -40,9 +40,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         toolbarTitleList = new String[3];
-        toolbarTitleList[0] = getString(R.string.manage_srt);
-        toolbarTitleList[1] = getResources().getString(R.string.view_by_item);
-        toolbarTitleList[2] = getResources().getString(R.string.view_by_date);
+        toolbarTitleList[0] = "분실물 등록";
+        toolbarTitleList[1] = "분실물 찾기";
+        toolbarTitleList[2] = "물건 구매";
 
         user = StartActivity.USER;
 

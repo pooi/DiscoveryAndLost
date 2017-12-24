@@ -41,8 +41,8 @@ public class DirectorMainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         toolbarTitleList = new String[2];
-        toolbarTitleList[0] = getString(R.string.manage_srt);
-        toolbarTitleList[1] = getResources().getString(R.string.view_by_item);
+        toolbarTitleList[0] = "분실물 등록";
+        toolbarTitleList[1] = "분실물 찾기";
 
         user = StartActivity.USER;
 
